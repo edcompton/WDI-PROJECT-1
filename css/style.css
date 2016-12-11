@@ -1,0 +1,29 @@
+.gameBoard {
+  height: 500px;
+  width: 900px;
+  border: 2px solid black;
+  margin: 0 auto;
+
+}
+
+#character {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  float: left;
+  margin-left: 40px;
+  border: 2px solid black;
+  top: 478px;
+
+}
+
+.object {
+  height: 20px;
+    width: 20px;
+    position: absolute;
+    float: right;
+    border: 2px solid black;
+    bottom: 188px;
+    right: 100px;
+
+}
