@@ -23,26 +23,29 @@ Game.addListeners = function addListeners () {
 
 
 Game.characterJump = function () {
-  Game.characterObject.on('click', Game.jumpAction);
+  Game.characterObject.keydown(Game.jumpAction);
 };
 
-Game.jumpAction = function () {
-  Game.characterObject.animate(
-    {
-      top: '348px'
-    },
-    {
-      duration: 200,
-      complete: function() {
-        Game.characterObject.animate(
-          {
-            top: '478px'
-          },
-          {duration: 300}
-        );
+Game.jumpAction = function (e) {
+  console.log('pressed');
+  if (e.keyCode === 32) {
+    Game.characterObject.animate(
+      {
+        top: '348px'
+      },
+      {
+        duration: 200,
+        complete: function() {
+          Game.characterObject.animate(
+            {
+              top: '478px'
+            },
+            {duration: 300}
+          );
+        }
       }
-    }
-  );
+    );
+  }
 };
 
 
@@ -99,19 +102,22 @@ Game.collisionCheck = function () {
 Game.collisionStep = function () {
   var objCol = $('.object')[0].getBoundingClientRect();
   var charCol = $('#character')[0].getBoundingClientRect();
-  console.log(objCol);
-  console.log(objCol.top, objCol.right, objCol.bottom, objCol.left);
-  console.log(charCol);
-  console.log(charCol.top, charCol.right, charCol.bottom, charCol.left);
-  var outsideBottom = (objCol.bottom < charCol.top);
-  var outsideTop = objCol.top > charCol.bottom;
-  var outsideLeft = objCol.left > charCol.right;
-  var outsideRight = objCol.right < charCol.left;
-  console.log(outsideBottom);
-  console.log(outsideTop);
-  console.log(outsideLeft);
-  console.log(outsideRight);
-  return  !((outsideBottom || outsideTop) || (outsideLeft || outsideRight));
+  // console.log(objCol);
+  // console.log(objCol.top, objCol.right, objCol.bottom, objCol.left);
+  // console.log(charCol);
+  // console.log(charCol.top, charCol.right, charCol.bottom, charCol.left);
+  // var outsideBottom = (objCol.bottom < charCol.top);
+  // var outsideTop = objCol.top > charCol.bottom;
+  // var outsideLeft = objCol.left > charCol.right;
+  // var outsideRight = objCol.right < charCol.left;
+  // console.log(outsideBottom);
+  // console.log(outsideTop);
+  // console.log(outsideLeft);
+  // console.log(outsideRight);
+  // return  !((outsideBottom || outsideTop) || (outsideLeft || outsideRight));
+  var rightEdge = objCol.left === charCol.right;
+  var bottomEdge = objCol.top <= charCol.bottom;
+  return!(rightEdge && bottomEdge);
 };
 
 
