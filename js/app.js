@@ -69,23 +69,36 @@ PHASE 2 (ADDITIONAL) SCOPE
 var Game = Game || {};
 
 Game.init = function init() {
-  this.$character = $('#character');
-  this.$board     = $('.gameBoard');
-  this.$body      = $('body');
+  this.$character   = $('#character');
+  this.$board       = $('.gameBoard');
+  this.$body        = $('body');
+  this.$startButton = $('#start');
+  this.$scoreBoard  = $('#scoreBoard');
 
   // Move to button later
-  this.start();
+  Game.startGame = function() {
+    this.$startButton.one('click', function() {
+      console.log('clicked');
+      var scoreCounter = 0;
+      var $scoreBoard = $('#scoreBoard');
+      setInterval(function() {
+        $scoreBoard.text(scoreCounter++);
+      }, 10);
+    });
+    this.start();
 };
 
 Game.start = function start() {
   // Setup character to jump
   this.characterJump();
-
   // Generate objects
   // This is what we want to do in a loop
   // Stopping the loop if a collision occurs
+  Game.startGame();
   setInterval(this.createRandObject.bind(this), 2000);
 };
+
+
 
 Game.characterJump = function () {
   this.$body.keyup(function(e){
@@ -133,11 +146,11 @@ Game.createRandObject = function () {
 
   // Animate object & check for collision
   // Remove after complete
-  $object.animate({ bottom: '0px', left: '-100px'}, {
+  $object.animate({ bottom: '0px', left: '-200px'}, {
     duration: 2500,
     step: Game.collisionCheck,
     complete: function () {
-      // this.remove();
+      this.remove();
     }
   });
 };
