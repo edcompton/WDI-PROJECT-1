@@ -74,27 +74,29 @@ Game.init = function init() {
   this.$body        = $('body');
   this.$startButton = $('#start');
   this.$scoreBoard  = $('#scoreBoard');
+  this.$highScore   = $('#highScore');
 
   // Move to button later
-  Game.startGame = function() {
-    this.$startButton.one('click', function() {
-      console.log('clicked');
-      var scoreCounter = 0;
-      var $scoreBoard = $('#scoreBoard');
-      setInterval(function() {
-        $scoreBoard.text(scoreCounter++);
-      }, 10);
-    });
-    this.start();
+  Game.startGame();
 };
 
+Game.startGame = function() {
+  this.$startButton.one('click', this.start.bind(this));
+};
+
+
+
 Game.start = function start() {
-  // Setup character to jump
+  console.log('clicked');
+  var scoreCounter = 0;
+  var $scoreBoard = $('#scoreBoard');
+  setInterval(function() {
+    $scoreBoard.text(scoreCounter++);
+  }, 100);
   this.characterJump();
   // Generate objects
   // This is what we want to do in a loop
   // Stopping the loop if a collision occurs
-  Game.startGame();
   setInterval(this.createRandObject.bind(this), 2000);
 };
 

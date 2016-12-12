@@ -4,7 +4,7 @@
 
 #start {
   text-align: center;
-  
+
 }
 
 .gameBoard {
@@ -44,4 +44,12 @@
   height: 50px;
   width: 100px;
   border: 2px solid black;
+  float: left;
+}
+
+#highScore {
+  height: 50px;
+  width: 100px;
+  border: 2px solid black;
+  float:right;
 }
