@@ -57,15 +57,6 @@ PHASE 2 (ADDITIONAL) SCOPE
 3. Create a way of incrementing the player jump size based on how long the up key is pressed for.
 */
 
-// var d = document.getElementById('object');
-// d.style.position = "absolute";
-// d.style.left = x_pos+'px';
-// d.style.top = y_pos+'px';
-
-// Issues
-// 2. Cant currently randomly create objects within a certain timeframe
-// 3. Haven't sorted win logic yet
-
 var Game = Game || {};
 
 Game.init = function init() {
@@ -73,10 +64,11 @@ Game.init = function init() {
   this.$board       = $('.gameBoard');
   this.$body        = $('body');
   this.$startButton = $('#start');
-  this.$scoreBoard  = $('#scoreBoard');
-  this.$highScore   = $('#highScore');
+  Game.$scoreBoard  = $('#scoreBoard');
+  Game.$highScore   = $('#highScore');
+  Game.scoreCounter = 0;
+  Game.gameOver     = false;
 
-  // Move to button later
   Game.startGame();
 };
 
@@ -88,10 +80,9 @@ Game.startGame = function() {
 
 Game.start = function start() {
   console.log('clicked');
-  var scoreCounter = 0;
-  var $scoreBoard = $('#scoreBoard');
+  Game.$scoreBoard = $('#scoreBoard');
   setInterval(function() {
-    $scoreBoard.text(scoreCounter++);
+    Game.$scoreBoard.text(Game.scoreCounter++);
   }, 100);
   this.characterJump();
   // Generate objects
@@ -142,12 +133,8 @@ Game.createRandObject = function () {
   $object.css('height', objectType.height);
   $object.css('width', objectType.width);
   $object.addClass(objectType.class);
-
-  // Add to page
+  // if (Game.Gameover === false) {
   this.$board.append($object);
-
-  // Animate object & check for collision
-  // Remove after complete
   $object.animate({ bottom: '0px', left: '-200px'}, {
     duration: 2500,
     step: Game.collisionCheck,
@@ -155,6 +142,7 @@ Game.createRandObject = function () {
       this.remove();
     }
   });
+  // }
 };
 
 Game.collisionCheck = function () {
@@ -162,7 +150,7 @@ Game.collisionCheck = function () {
   var character = Game.getPositions(Game.$character);
 
   if (obstacle.right > character.left && obstacle.left < character.right && obstacle.top < character.bottom && obstacle.bottom > character.top) {
-    $(this).remove();
+    Game.over();
   }
 };
 
@@ -173,6 +161,16 @@ Game.getPositions = function getPositions($elem) {
     right: Number($elem.offset().left) + Number($elem.width()),
     bottom: Number($elem.offset().top) + Number($elem.height())
   };
+};
+
+Game.over = function() {
+  console.log('game over');
+  Game.$highScore.html(Game.$scoreBoard.text());
+  console.log(Game.$highScore.html());
+  // Game.$scoreBoard.text('');
+  // Game.gameOver = true;
+  Game.init();
+
 };
 
 $(Game.init.bind(Game));
