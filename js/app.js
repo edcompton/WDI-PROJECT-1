@@ -1,129 +1,3 @@
-
-
-// $(Game.start);
-var Game = Game || {};
-var Objects = [];
-var gameOver = false;
-
-$(start);
-
-function start () {
-  Game.characterObject = $('#character');
-  Game.gameObject = $('.object');
-  console.log(Game.gameObject);
-  Game.characterJump();
-  // Game.createRandObject();
-  Game.addListeners();
-}
-
-Game.addListeners = function addListeners () {
-  this.gameObject.on('click', Game.moveObject);
-  console.log(Game);
-};
-
-
-Game.characterJump = function () {
-  Game.characterObject.keydown(Game.jumpAction);
-};
-
-Game.jumpAction = function (e) {
-  console.log('pressed');
-  if (e.keyCode === 32) {
-    Game.characterObject.animate(
-      {
-        top: '348px'
-      },
-      {
-        duration: 200,
-        complete: function() {
-          Game.characterObject.animate(
-            {
-              top: '478px'
-            },
-            {duration: 300}
-          );
-        }
-      }
-    );
-  }
-};
-
-
-
-// Game.createRandObject = function () {
-//   Game.obstacle1 = $('<div id="obs1"></div>');
-//   Game.obstacle2 = $('<div id="obs2"></div>');
-//   Game.obstacle1.addClass('object');
-//   Game.obstacle2.addClass('object');
-//   var numObjects = $('.object').length;
-//   while (gameOver === false) {
-//     setInterval(Game.whichObstacle, 5000);
-//     if (numObjects === 5) {
-//       gameOver = true;
-//     }
-//   }
-// };
-
-
-// Game.whichObstacle = function () {
-//   var objChoice = Math.floor(Math.random()*2);
-//   if (objChoice === 1) {
-//     Game.obstacle1.on();
-//     $('.gameBoard').append(Game.obstacle1);
-//     $('.object').each(Game.moveObject);
-//   } else {
-//     $('.gameBoard').append(Game.obstacle2);
-//     $('.object').each(Game.moveObject);
-//   }
-// };
-
-Game.moveObject = function () {
-  Game.gameObject.animate(
-    {
-      bottom: '188px',
-      left: '50px'
-    },
-    {
-      duration: 2500,
-      step: Game.collisionCheck
-    }
-  );
-};
-
-Game.collisionCheck = function () {
-  Game.collisionStep();
-  if (Game.collisionStep === true) {
-    console.log('game over');
-  } else {
-    console.log('keep going');
-  }
-};
-
-Game.collisionStep = function () {
-  var objCol = $('.object')[0].getBoundingClientRect();
-  var charCol = $('#character')[0].getBoundingClientRect();
-  // console.log(objCol);
-  // console.log(objCol.top, objCol.right, objCol.bottom, objCol.left);
-  // console.log(charCol);
-  // console.log(charCol.top, charCol.right, charCol.bottom, charCol.left);
-  // var outsideBottom = (objCol.bottom < charCol.top);
-  // var outsideTop = objCol.top > charCol.bottom;
-  // var outsideLeft = objCol.left > charCol.right;
-  // var outsideRight = objCol.right < charCol.left;
-  // console.log(outsideBottom);
-  // console.log(outsideTop);
-  // console.log(outsideLeft);
-  // console.log(outsideRight);
-  // return  !((outsideBottom || outsideTop) || (outsideLeft || outsideRight));
-  var rightEdge = objCol.left === charCol.right;
-  var bottomEdge = objCol.top <= charCol.bottom;
-  return!(rightEdge && bottomEdge);
-};
-
-
-
-
-
 /*
 PHASE 1 SCOPE
 
@@ -187,3 +61,103 @@ PHASE 2 (ADDITIONAL) SCOPE
 // d.style.position = "absolute";
 // d.style.left = x_pos+'px';
 // d.style.top = y_pos+'px';
+
+// Issues
+// 2. Cant currently randomly create objects within a certain timeframe
+// 3. Haven't sorted win logic yet
+
+var Game = Game || {};
+
+Game.init = function init() {
+  this.$character = $('#character');
+  this.$board     = $('.gameBoard');
+  this.$body      = $('body');
+
+  // Move to button later
+  this.start();
+};
+
+Game.start = function start() {
+  // Setup character to jump
+  this.characterJump();
+
+  // Generate objects
+  // This is what we want to do in a loop
+  // Stopping the loop if a collision occurs
+  setInterval(this.createRandObject.bind(this), 2000);
+};
+
+Game.characterJump = function () {
+  this.$body.keyup(function(e){
+    if (e.keyCode === 32) return Game.jumpAction();
+  });
+};
+
+Game.jumpAction = function () {
+  Game.$character.animate({ top: '348px' }, {
+    duration: 200,
+    complete: function() {
+      Game.$character.animate({ top: '478px' }, { duration: 300 });
+    }
+  });
+};
+
+Game.chooseObjectType = function chooseObjectType() {
+  var objectTypes = {
+    box: {
+      width: '20px',
+      height: '20px',
+      class: 'box'
+    },
+    wall: {
+      width: '20px',
+      height: '40px',
+      class: 'wall'
+    }
+  };
+  var randomIndex = Math.floor(Math.random() * Object.keys(objectTypes).length);
+  var randomKey   = Object.keys(objectTypes)[randomIndex];
+  return objectTypes[randomKey];
+};
+
+Game.createRandObject = function () {
+  // Create object
+  var $object = $('<div class="object"></div>');
+  var objectType = this.chooseObjectType();
+  $object.css('height', objectType.height);
+  $object.css('width', objectType.width);
+  $object.addClass(objectType.class);
+
+  // Add to page
+  this.$board.append($object);
+
+  // Animate object & check for collision
+  // Remove after complete
+  $object.animate({ bottom: '0px', left: '-100px'}, {
+    duration: 2500,
+    step: Game.collisionCheck,
+    complete: function () {
+      // this.remove();
+    }
+  });
+};
+
+Game.collisionCheck = function () {
+  var obstacle  = Game.getPositions($(this));
+  var character = Game.getPositions(Game.$character);
+
+  if (obstacle.right > character.left && obstacle.left < character.right && obstacle.top < character.bottom && obstacle.bottom > character.top) {
+    $(this).remove();
+  }
+};
+
+Game.getPositions = function getPositions($elem) {
+  return {
+    top: $elem.offset().top,
+    left: $elem.offset().left,
+    right: Number($elem.offset().left) + Number($elem.width()),
+    bottom: Number($elem.offset().top) + Number($elem.height())
+  };
+};
+
+$(Game.init.bind(Game));
