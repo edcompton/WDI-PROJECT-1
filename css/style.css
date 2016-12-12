@@ -14,16 +14,19 @@
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  background-image: url('http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif');
+  background-size: cover;
 }
 
 #character {
-  height: 20px;
-  width: 20px;
-  position: relative;
-  float: left;
+  height: 100px;
+  width: 91px;
+  position: absolute;
+  left: 50px;
   margin-left: 40px;
-  border: 2px solid black;
-  top: 478px;
+  bottom: 0px;
+  background-image: url("http://files.gamebanana.com/img/ico/sprays/52f854ce41068.gif");
+  animation-iteration-count:infinite;
 }
 
 .object {
@@ -39,18 +42,64 @@
   border: 2px solid black;
   margin: 0 auto;
   position: relative;
+  text-align: center;
 }
 
 .score {
   height: 50px;
   width: 100px;
   border: 2px solid black;
-  float: left;
+  position: absolute;
+  left: 37px;
+  bottom: 18px;
+}
+
+#scoreBoard {
+  text-align: center;
 }
 
 #highScore {
   height: 50px;
   width: 100px;
   border: 2px solid black;
-  float:right;
+  float: right;
+  bottom: -13px;
+  right: 37px;
+  position: relative;
+  text-align: center;
+  line-height: 53px;
+}
+
+#scores {
+  height: 30px;
+  width: 900px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+
+#S1 {
+  float: left;
+  position: absolute;
+  left: 68px;
+  bottom: -11px;
+}
+
+#S2 {
+  float: right;
+  position: relative;
+  right: 51px;
+  bottom: 9px;
+}
+
+#start {
+  position: relative;
+  top: 29px;
+  left: 57px;
+  height: 50px;
+  width: 100px;
+}
+
+.box {
+  background-image: url("http://static.tumblr.com/6e0d1f3887be1fb8603889ca12ca77c7/ypywzw1/6mnnmbim6/tumblr_static_2rxbpwchnz8kg4os404o080w4.gif");
 }

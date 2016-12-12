@@ -68,6 +68,7 @@ Game.init = function init() {
   Game.$highScore   = $('#highScore');
   Game.scoreCounter = 0;
   Game.gameOver     = false;
+  Game.difficulty   = 0;
 
   Game.startGame();
 };
@@ -77,6 +78,8 @@ Game.startGame = function() {
   this.$startButton.on('click', this.start.bind(this));
 };
 
+
+
 Game.start = function start() {
   Game.gameOver = false;
   console.log('clicked');
@@ -85,22 +88,22 @@ Game.start = function start() {
     Game.$scoreBoard.text(Game.scoreCounter++);
   }, 100);
   Game.seconds = 1500;
-  setInterval(Game.whichLevel(), 100);
+  Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
 };
 
-Game.whichLevel = function() {
-  if ((parseFloat(Game.scoreCounter)) < 100) {
-    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
-  } else if ((parseFloat(Game.scoreCounter)) > 100 && (parseFloat(Game.scoreCounter)) < 1000) {
-    console.log('next level');
-    Game.seconds = 500;
-    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
-  } else if ((parseFloat(Game.scoreCounter)) > 1000) {
-    Game.seconds -= 500;
-    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
-  }
-};
 
+// Game.whichLevel = function() {
+//   if (Game.scoreCounter < 500) {
+//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), Game.seconds);
+//   } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
+//     Game.seconds -= 500;
+//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), Game.seconds);
+//   } else if (Game.scoreCounter > 1000) {
+//     Game.seconds -= 500;
+//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), Game.seconds);
+//   }
+// };
+//
 
 Game.characterJump = function () {
   this.$body.keyup(function(e){
@@ -109,10 +112,10 @@ Game.characterJump = function () {
 };
 
 Game.jumpAction = function () {
-  Game.$character.animate({ top: '348px' }, {
+  Game.$character.animate({ bottom: '120px' }, {
     duration: 200,
     complete: function() {
-      Game.$character.animate({ top: '478px' }, { duration: 300 });
+      Game.$character.animate({ bottom: '0px' }, { duration: 300 });
     }
   });
 };
@@ -177,10 +180,31 @@ Game.getPositions = function getPositions($elem) {
 
 Game.over = function() {
   console.log('game over');
-  Game.$highScore.html(Game.$scoreBoard.text());
+  if ((parseFloat(Game.$scoreBoard.text())) > (parseFloat(Game.$highScore.text()))) {
+    Game.$highScore.html(Game.$scoreBoard.text());
+  }
   console.log(Game.$highScore.html());
   Game.$scoreBoard.html('0');
   Game.scoreCounter = 0;
 };
 
 $(Game.init.bind(Game));
+
+
+
+
+// var seconds = 2000;
+// while (Game.gameOver === false) {
+//   if (Game.scoreCounter < 500) {
+//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
+//   } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
+//     seconds -= 500;
+//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
+//   } else if (Game.scoreCounter > 1000) {
+//     seconds -= 500;
+//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
+//   }
+// }
+
+//
+// On key up check score for difficulty criteria and if over x then increment difficulty counter by 1
