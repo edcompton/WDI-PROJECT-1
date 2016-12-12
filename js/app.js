@@ -73,29 +73,34 @@ Game.init = function init() {
 };
 
 Game.startGame = function() {
-  this.$startButton.one('click', this.start.bind(this));
+  this.characterJump();
+  this.$startButton.on('click', this.start.bind(this));
 };
 
 
 
 Game.start = function start() {
   console.log('clicked');
-  Game.$scoreBoard = $('#scoreBoard');
-  setInterval(function() {
-    Game.$scoreBoard.text(Game.scoreCounter++);
-  }, 100);
-  this.characterJump();
-  // Generate objects
-  // This is what we want to do in a loop
-  // Stopping the loop if a collision occurs
-  setInterval(this.createRandObject.bind(this), 2000);
+  if (Game.gameOver === false) {
+    Game.$scoreBoard = $('#scoreBoard');
+    Game.scoreInterval = setInterval(function() {
+      Game.$scoreBoard.text(Game.scoreCounter++);
+    }, 100);
+    var seconds = 2000;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), seconds);
+  } else {
+    Game.$scoreBoard.text('0');
+  }
 };
 
+// var seconds = 2000;
+// while (game)
+// Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
 
 
 Game.characterJump = function () {
   this.$body.keyup(function(e){
-    if (e.keyCode === 32) return Game.jumpAction();
+    if (e.keyCode === 38) return Game.jumpAction();
   });
 };
 
@@ -127,22 +132,21 @@ Game.chooseObjectType = function chooseObjectType() {
 };
 
 Game.createRandObject = function () {
-  // Create object
-  var $object = $('<div class="object"></div>');
-  var objectType = this.chooseObjectType();
-  $object.css('height', objectType.height);
-  $object.css('width', objectType.width);
-  $object.addClass(objectType.class);
-  // if (Game.Gameover === false) {
-  this.$board.append($object);
-  $object.animate({ bottom: '0px', left: '-200px'}, {
-    duration: 2500,
-    step: Game.collisionCheck,
-    complete: function () {
-      this.remove();
-    }
-  });
-  // }
+  if (Game.gameOver === false) {
+    var $object = $('<div class="object"></div>');
+    var objectType = this.chooseObjectType();
+    $object.css('height', objectType.height);
+    $object.css('width', objectType.width);
+    $object.addClass(objectType.class);
+    this.$board.append($object);
+    $object.animate({ bottom: '0px', left: '-200px'}, {
+      duration: 2500,
+      step: Game.collisionCheck,
+      complete: function () {
+        this.remove();
+      }
+    });
+  }
 };
 
 Game.collisionCheck = function () {
@@ -150,6 +154,9 @@ Game.collisionCheck = function () {
   var character = Game.getPositions(Game.$character);
 
   if (obstacle.right > character.left && obstacle.left < character.right && obstacle.top < character.bottom && obstacle.bottom > character.top) {
+    $(this).remove();
+    clearInterval(Game.objectsInterval);
+    clearInterval(Game.scoreInterval);
     Game.over();
   }
 };
@@ -167,10 +174,9 @@ Game.over = function() {
   console.log('game over');
   Game.$highScore.html(Game.$scoreBoard.text());
   console.log(Game.$highScore.html());
-  // Game.$scoreBoard.text('');
-  // Game.gameOver = true;
-  Game.init();
-
+  Game.$scoreBoard.html('0');
+  Game.scoreCounter = 0;
+  // return Game.gameOver = true;
 };
 
 $(Game.init.bind(Game));
