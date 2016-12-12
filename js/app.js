@@ -77,25 +77,29 @@ Game.startGame = function() {
   this.$startButton.on('click', this.start.bind(this));
 };
 
-
-
 Game.start = function start() {
+  Game.gameOver = false;
   console.log('clicked');
-  if (Game.gameOver === false) {
-    Game.$scoreBoard = $('#scoreBoard');
-    Game.scoreInterval = setInterval(function() {
-      Game.$scoreBoard.text(Game.scoreCounter++);
-    }, 100);
-    var seconds = 2000;
-    Game.objectsInterval = setInterval(this.createRandObject.bind(this), seconds);
-  } else {
-    Game.$scoreBoard.text('0');
-  }
+  Game.$scoreBoard = $('#scoreBoard');
+  Game.scoreInterval = setInterval(function() {
+    Game.$scoreBoard.text(Game.scoreCounter++);
+  }, 100);
+  Game.seconds = 1500;
+  setInterval(Game.whichLevel(), 100);
 };
 
-// var seconds = 2000;
-// while (game)
-// Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
+Game.whichLevel = function() {
+  if ((parseFloat(Game.scoreCounter)) < 100) {
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+  } else if ((parseFloat(Game.scoreCounter)) > 100 && (parseFloat(Game.scoreCounter)) < 1000) {
+    console.log('next level');
+    Game.seconds = 500;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+  } else if ((parseFloat(Game.scoreCounter)) > 1000) {
+    Game.seconds -= 500;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+  }
+};
 
 
 Game.characterJump = function () {
@@ -140,7 +144,7 @@ Game.createRandObject = function () {
     $object.addClass(objectType.class);
     this.$board.append($object);
     $object.animate({ bottom: '0px', left: '-200px'}, {
-      duration: 2500,
+      duration: Game.seconds,
       step: Game.collisionCheck,
       complete: function () {
         this.remove();
@@ -158,6 +162,7 @@ Game.collisionCheck = function () {
     clearInterval(Game.objectsInterval);
     clearInterval(Game.scoreInterval);
     Game.over();
+    Game.gameOver = true;
   }
 };
 
@@ -176,7 +181,6 @@ Game.over = function() {
   console.log(Game.$highScore.html());
   Game.$scoreBoard.html('0');
   Game.scoreCounter = 0;
-  // return Game.gameOver = true;
 };
 
 $(Game.init.bind(Game));
