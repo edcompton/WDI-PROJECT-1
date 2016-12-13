@@ -118,11 +118,15 @@ body {
   height: 50px;
   width: 100px;
   border-radius: 15px;
-  background-color: yellow;
+  background-color: #F7B801;
   color: black;
   font-family: 'PressStart2P';
   text-align: center;
-  text-shadow: #afe222 1px 1px, #000 2px 2px, #000 3px 3px;
+  text-shadow: #F8F0FB 1px 1px, #000 2px 2px, #000 3px 3px;
+  animation-duration: 300ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 button:focus {outline:0;}
@@ -132,7 +136,7 @@ button:focus {outline:0;}
 }
 
 #wall {
-  content: url("https://openclipart.org/image/2400px/svg_to_png/218087/Pine_Tree.png");
+  content: url("../Images/Cactus 2.gif");
 }
 
 #mushroom {
@@ -164,12 +168,24 @@ button:focus {outline:0;}
 
 #pregameText {
   color: white;
-  font-size: 20px;
+  font-size: 50px;
   position: relative;
   text-align: center;
   line-height: 500px;
   margin: 0 auto;
-  display: none;
+  font-family: 'PressStart2P';
+  animation-duration: 300ms;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+@keyframes blink {
+  from {
+    color: #F7B801;
+  }
+  to {
+    color: #007FFF;
+  }
 }
 
 #overlays {
@@ -179,19 +195,19 @@ button:focus {outline:0;}
   margin: 0 auto;
   bottom: 150px;
   left: 205px;
-}
 
-#levelUp {
-  height: 129px;
-  width: 500px;
-  position: absolute;
-  text-align: center;
-  margin: 0 auto;
-  bottom: 277px;
-  left: 205px;
-  border: none;
-}
 
-audio {
-  display: none;
-}
+  #levelUp {
+    height: 129px;
+    width: 400px;
+    position: absolute;
+    text-align: center;
+    margin: 0 auto;
+    bottom: 277px;
+    left: 205px;
+    border: none;
+  }
+
+  audio {
+    display: none;
+  }

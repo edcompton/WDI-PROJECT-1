@@ -76,6 +76,7 @@ Game.init = function init() {
   Game.gameOver     = false;
   Game.difficulty   = 0;
   Game.$overlays    = $('.images');
+  Game.$preGame     = $('#pregameText');
 
   Game.startGame();
 };
@@ -90,6 +91,7 @@ Game.startGame = function() {
 Game.start = function start() {
   Game.gameOver = false;
   this.$board.css('background-image', 'url("http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif")');
+  Game.$preGame.fadeOut(1000);
   this.$startButton.hide();
   Game.$overlays.attr('src', '');
   this.$character.attr('src', 'http://rs535.pbsrc.com/albums/ee355/Fikriy/megaman1.gif~c200');
@@ -253,6 +255,8 @@ Game.collisionCheck = function () {
     clearInterval(Game.levelsInterval);
     clearInterval(Game.scoreInterval);
     Game.over();
+    var gO = new Audio('../Audio/game-over.mp3');
+    gO.play();
     Game.gameOver = true;
   }
 };
@@ -277,8 +281,6 @@ Game.over = function() {
   Game.$overlays.attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
   this.$character.attr('src', 'http://giffiles.alphacoders.com/124/12434.gif');
   this.$board.css('background-image', 'url("http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif")');
-  var gO = new Audio('../Audio/game-over.mp3');
-  gO.play();
   this.$startButton.show();
 };
 
