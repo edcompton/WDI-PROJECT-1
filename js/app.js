@@ -106,38 +106,53 @@ Game.start = function start() {
 
 Game.whichLevel = function() {
   clearInterval(Game.objectsInterval);
-  if (Game.scoreCounter < 300 && Game.gameOver === false) {
+  if (Game.scoreCounter < 200 && Game.gameOver === false) {
     console.log('level1');
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
-  } else if (Game.scoreCounter > 300 && Game.scoreCounter < 350){
+  } else if (Game.scoreCounter > 200 && Game.scoreCounter < 250){
     Game.nextLevel();
-    this.$board.css('background-image', 'url("http://i.imgur.com/pnztT1T.gif")');
-  } else if (Game.scoreCounter > 300 && Game.scoreCounter < 600) {
+    setTimeout(function(){
+      Game.$board.css('background-image', 'url("http://i.imgur.com/pnztT1T.gif")');
+    }, 3000);
+  } else if (Game.scoreCounter > 200 && Game.scoreCounter < 400) {
     Game.seconds = 1750;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level2');
-  } else if (Game.scoreCounter > 600 && Game.scoreCounter < 650) {
+  } else if (Game.scoreCounter > 400 && Game.scoreCounter < 450) {
     Game.nextLevel();
-    this.$board.css('background-image', 'url("https://i2.wp.com/33.media.tumblr.com/91268f51edbe017edac635157a1c333d/tumblr_nlaq8aGXw61qze3hdo1_500.gif?zoom=2&resize=500%2C291")');
-  } else if (Game.scoreCounter > 600 && Game.scoreCounter < 900) {
+    setTimeout(function(){
+      Game.$board.css('background-image', 'url("https://i2.wp.com/33.media.tumblr.com/91268f51edbe017edac635157a1c333d/tumblr_nlaq8aGXw61qze3hdo1_500.gif?zoom=2&resize=500%2C291")');
+    }, 3000);
+  } else if (Game.scoreCounter > 400 && Game.scoreCounter < 600) {
     Game.seconds = 1500;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level3');
-  } else if (Game.scoreCounter > 900 && Game.scoreCounter < 950) {
+  } else if (Game.scoreCounter > 600 && Game.scoreCounter < 650) {
     Game.nextLevel();
-    this.$board.css('background-image', 'url("https://s-media-cache-ak0.pinimg.com/originals/7b/46/64/7b4664b2578397f260b13cf6a2d63743.gif")');
-  } else if (Game.scoreCounter > 900) {
+    setTimeout(function(){
+      Game.$board.css('background-image', 'url("https://s-media-cache-ak0.pinimg.com/originals/7b/46/64/7b4664b2578397f260b13cf6a2d63743.gif")');
+    }, 3000);
+  } else if (Game.scoreCounter > 600 && Game.scoreCounter < 800) {
     Game.seconds = 1250;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level4');
+  } else if (Game.scoreCounter > 800 && Game.scoreCounter < 850) {
+    Game.nextLevel();
+    setTimeout(function(){
+      Game.$board.css('background-image', 'url("http://66.media.tumblr.com/74453230389e099d7d3f38f38efc643b/tumblr_o7mcf1ecFk1unbtf2o1_500.gif")');
+    }, 3000);
+  } else if (Game.scoreCounter > 800) {
+    Game.seconds = 1250;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+    console.log('level5');
   }
 };
 
-// SCENE CHANGE OVERLAYS
-// Game.$overlays.attr('src', 'http://bestanimations.com/Military/Explosions/fire-explosion-animation-2.gif').show().delay(2000).fadeOut();
-
 Game.nextLevel = function() {
-  Game.$overlays.attr('src', 'https://static1.squarespace.com/static/52057cf8e4b00fb5186eec70/t/5519f9fee4b0972a5616c3b8/1427765760440/level-up.gif?format=1000w');
+  this.$board.css('background-image', 'url("http://68.media.tumblr.com/c27cccacc0d0da6ecf3058bfda281d31/tumblr_ni1df4G2CW1s4fz4bo1_r4_500.gif")');
+  setTimeout(function(){
+    Game.$overlays.attr('src', 'https://static1.squarespace.com/static/52057cf8e4b00fb5186eec70/t/5519f9fee4b0972a5616c3b8/1427765760440/level-up.gif?format=1000w');
+  }, 1000);
   Game.$overlays.attr('id', 'levelUp');
   setTimeout(Game.clearImg, 2000);
 };
@@ -148,7 +163,7 @@ Game.clearImg = function() {
 };
 
 Game.characterJump = function () {
-  this.$body.keyup(function(e){
+  this.$body.keydown(function(e){
     if (e.keyCode === 38) return Game.jumpAction();
   });
 };
@@ -211,10 +226,6 @@ Game.chooseObjectType = function chooseObjectType() {
   return objectTypes[randomKey];
 };
 
-// 1. Create a two new classes in the object, one for ground, one for flying
-// 2. Add one of those classes to each item appended below in addition to their existing classes
-// 3. Create an if statement that takes the existing animation for the ground items and creates a new else statement for the flying items, which changes their standard ground position.
-// 4. May need to create a new flying object to check where they are positioned on the screen.
 
 Game.createRandObject = function () {
   if (Game.gameOver === false) {
@@ -255,10 +266,17 @@ Game.collisionCheck = function () {
     clearInterval(Game.levelsInterval);
     clearInterval(Game.scoreInterval);
     Game.over();
-    var gO = new Audio('../Audio/game-over.mp3');
-    gO.play();
+    Game.gameOverAudio();
     Game.gameOver = true;
   }
+};
+
+Game.gameOverAudio = function() {
+  document.getElementById('soundTrack').pause();
+  $('#wapWap').on('ended', function(){
+    document.getElementById('soundTrack').play();
+  });
+  document.getElementById('wapWap').play();
 };
 
 Game.getPositions = function getPositions($elem) {
