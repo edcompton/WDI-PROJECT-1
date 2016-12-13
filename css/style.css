@@ -4,6 +4,8 @@ body {
 }
 
 .gameBoard {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   height: 500px;
   width: 900px;
   border: 2px solid black;
@@ -13,8 +15,6 @@ body {
   background-image: url('http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif');
   background-size: cover;
 }
-/*
-http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif*/
 
 /*http://i.imgur.com/pnztT1T.gif*/
 
@@ -145,6 +145,10 @@ button:focus {outline:0;}
 
 #owl {
   content: url("http://data.whicdn.com/images/124352933/large.gif");
+}
+
+#jetpack {
+  content: url("https://mobilegamegraphics.com/pvpaterno/pixel_aliens_gif/Hero-Boy-Boost-Forward.gif");
 }
 
 #scores {

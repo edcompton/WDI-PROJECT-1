@@ -77,7 +77,6 @@ Game.init = function init() {
   Game.difficulty   = 0;
   Game.$overlays    = $('.images');
 
-
   Game.startGame();
 };
 
@@ -90,6 +89,7 @@ Game.startGame = function() {
 
 Game.start = function start() {
   Game.gameOver = false;
+  this.$board.css('background-image', 'url("http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif")');
   this.$startButton.hide();
   Game.$overlays.attr('src', '');
   this.$character.attr('src', 'http://rs535.pbsrc.com/albums/ee355/Fikriy/megaman1.gif~c200');
@@ -109,18 +109,30 @@ Game.whichLevel = function() {
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
   } else if (Game.scoreCounter > 300 && Game.scoreCounter < 350){
     Game.nextLevel();
-  } else if (Game.scoreCounter > 300 && Game.scoreCounter < 700) {
-    Game.seconds = 1500;
+    this.$board.css('background-image', 'url("http://i.imgur.com/pnztT1T.gif")');
+  } else if (Game.scoreCounter > 300 && Game.scoreCounter < 600) {
+    Game.seconds = 1750;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level2');
-  } else if (Game.scoreCounter > 700 && Game.scoreCounter < 750) {
+  } else if (Game.scoreCounter > 600 && Game.scoreCounter < 650) {
     Game.nextLevel();
-  } else if (Game.scoreCounter > 700) {
-    Game.seconds = 1000;
+    this.$board.css('background-image', 'url("https://i2.wp.com/33.media.tumblr.com/91268f51edbe017edac635157a1c333d/tumblr_nlaq8aGXw61qze3hdo1_500.gif?zoom=2&resize=500%2C291")');
+  } else if (Game.scoreCounter > 600 && Game.scoreCounter < 900) {
+    Game.seconds = 1500;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level3');
+  } else if (Game.scoreCounter > 900 && Game.scoreCounter < 950) {
+    Game.nextLevel();
+    this.$board.css('background-image', 'url("https://s-media-cache-ak0.pinimg.com/originals/7b/46/64/7b4664b2578397f260b13cf6a2d63743.gif")');
+  } else if (Game.scoreCounter > 900) {
+    Game.seconds = 1250;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+    console.log('level4');
   }
 };
+
+// SCENE CHANGE OVERLAYS
+// Game.$overlays.attr('src', 'http://bestanimations.com/Military/Explosions/fire-explosion-animation-2.gif').show().delay(2000).fadeOut();
 
 Game.nextLevel = function() {
   Game.$overlays.attr('src', 'https://static1.squarespace.com/static/52057cf8e4b00fb5186eec70/t/5519f9fee4b0972a5616c3b8/1427765760440/level-up.gif?format=1000w');
@@ -159,7 +171,7 @@ Game.chooseObjectType = function chooseObjectType() {
       width: '100px',
       height: '70px',
       id: 'box',
-      class: 'flying'
+      class: 'object'
     },
     wall: {
       width: '70px',
@@ -183,6 +195,12 @@ Game.chooseObjectType = function chooseObjectType() {
       width: '100px',
       height: '100px',
       id: 'owl',
+      class: 'flying'
+    },
+    jetpack: {
+      width: '100px',
+      height: '100px',
+      id: 'jetpack',
       class: 'flying'
     }
   };
@@ -258,6 +276,7 @@ Game.over = function() {
   Game.scoreCounter = 0;
   Game.$overlays.attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
   this.$character.attr('src', 'http://giffiles.alphacoders.com/124/12434.gif');
+  this.$board.css('background-image', 'url("http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif")');
   this.$startButton.show();
 };
 
