@@ -71,6 +71,7 @@ Game.init = function init() {
   Game.scoreCounter = 0;
   Game.gameOver     = false;
   Game.difficulty   = 0;
+  Game.$overlays    = $('.images');
 
 
   Game.startGame();
@@ -85,7 +86,8 @@ Game.startGame = function() {
 
 Game.start = function start() {
   Game.gameOver = false;
-  $('#overlays').attr('src', '');
+  this.$startButton.hide();
+  Game.$overlays.attr('src', '');
   this.$character.attr('src', 'http://rs535.pbsrc.com/albums/ee355/Fikriy/megaman1.gif~c200');
   console.log('clicked');
   Game.$scoreBoard = $('#scoreBoard');
@@ -96,20 +98,19 @@ Game.start = function start() {
   Game.levelsInterval = setInterval(this.whichLevel.bind(this), 3000);
 };
 
-// Game.whichLevel = function() {
-//   clearInterval(Game.objectsInterval);
-//   Game.objectsInterval();
-// };
-
 Game.whichLevel = function() {
   clearInterval(Game.objectsInterval);
   if (Game.scoreCounter < 500) {
     console.log('level1');
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+  } else if (Game.scoreCounter > 500 && Game.scoreCounter < 550){
+    Game.nextLevel();
   } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
     Game.seconds -= 250;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level2');
+  } else if (Game.scoreCounter > 1000 && Game.scoreCounter < 1050) {
+    Game.nextLevel();
   } else if (Game.scoreCounter > 1000) {
     Game.seconds -= 250;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
@@ -117,6 +118,16 @@ Game.whichLevel = function() {
   }
 };
 
+Game.nextLevel = function() {
+  Game.$overlays.attr('src', 'https://static1.squarespace.com/static/52057cf8e4b00fb5186eec70/t/5519f9fee4b0972a5616c3b8/1427765760440/level-up.gif?format=1000w');
+  Game.$overlays.attr('id', 'levelUp');
+  setTimeout(Game.clearImg, 2000);
+};
+
+Game.clearImg = function() {
+  Game.$overlays.attr('src', '');
+  Game.$overlays.attr('id', '');
+};
 
 Game.characterJump = function () {
   this.$body.keyup(function(e){
@@ -219,8 +230,9 @@ Game.over = function() {
   console.log(Game.$highScore.html());
   Game.$scoreBoard.html('0');
   Game.scoreCounter = 0;
-  $('#overlays').attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
+  Game.$overlays.attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
   this.$character.attr('src', 'http://giffiles.alphacoders.com/124/12434.gif');
+  this.$startButton.show();
 };
 
 $(Game.init.bind(Game));

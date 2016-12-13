@@ -169,6 +169,17 @@ button:focus {outline:0;}
   left: 205px;
 }
 
+#levelUp {
+  height: 129px;
+  width: 500px;
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  bottom: 277px;
+  left: 205px;
+  border: none;
+}
+
 audio {
   display: none;
 }
