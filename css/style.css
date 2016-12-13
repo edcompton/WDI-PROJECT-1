@@ -1,10 +1,6 @@
-.gameContainer {
-
-}
-
-#start {
-  text-align: center;
-
+body {
+  background-image: url("http://i.imgur.com/QOfZ5r8.jpg");
+  background-size: cover;
 }
 
 .gameBoard {
@@ -31,7 +27,6 @@
 
 .object {
   position: absolute;
-  border: 2px solid black;
   bottom: 0px;
   right: -200px;
 }
@@ -43,6 +38,9 @@
   margin: 0 auto;
   position: relative;
   text-align: center;
+  background-color: #8B6969;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .score {
@@ -52,10 +50,13 @@
   position: absolute;
   left: 37px;
   bottom: 18px;
+  background-color: white;
+  border-radius: 100px;
 }
 
 #scoreBoard {
   text-align: center;
+  font-family: 'PressStart2P';
 }
 
 #highScore {
@@ -68,6 +69,9 @@
   position: relative;
   text-align: center;
   line-height: 53px;
+  background-color: white;
+  border-radius: 100px;
+  font-family: 'PressStart2P';
 }
 
 #scores {
@@ -81,14 +85,14 @@
 #S1 {
   float: left;
   position: absolute;
-  left: 68px;
-  bottom: -11px;
+  left: 50px;
+  bottom: -7px;
 }
 
 #S2 {
   float: right;
   position: relative;
-  right: 51px;
+  right: 12px;
   bottom: 9px;
 }
 
@@ -98,8 +102,69 @@
   left: 57px;
   height: 50px;
   width: 100px;
+  border-radius: 15px;
+  background-color: yellow;
+  color: black;
+  font-family: 'PressStart2P';
+  text-align: center;
+  animation-iteration-count: infinite;
+  animation-name: slideout;
+  animation-direction: alternate;
+  animation-duration: 3s;
+  text-shadow: #afe222 1px 1px, #000 2px 2px, #000 3px 3px;
+  transition: all 0.3s ease-out;
+
 }
 
 .box {
-  background-image: url("http://static.tumblr.com/6e0d1f3887be1fb8603889ca12ca77c7/ypywzw1/6mnnmbim6/tumblr_static_2rxbpwchnz8kg4os404o080w4.gif");
+  content: url("http://static.tumblr.com/6e0d1f3887be1fb8603889ca12ca77c7/ypywzw1/6mnnmbim6/tumblr_static_2rxbpwchnz8kg4os404o080w4.gif");
+}
+
+.wall {
+  content: url("https://openclipart.org/image/2400px/svg_to_png/218087/Pine_Tree.png");
+}
+
+.mushroom {
+  content: url("https://media.giphy.com/media/A1GHXIybD7mhO/giphy.gif");
+}
+
+.bear {
+  content: url("http://i96.photobucket.com/albums/l188/Pandora_Leonhart/tumblr_leptmoybI51qc4f5ao1_500_zps99hjkng1.gif");
+}
+
+.owl {
+  content: url("http://data.whicdn.com/images/124352933/large.gif");
+}
+
+#scores {
+  color: white;
+  font-size: 15px;
+  font-family: 'PressStart2P';
+}
+
+@font-face {
+  font-family: 'PressStart2P';
+  src: url('../Fonts/codeman38_press-start-2p/PressStart2P.ttf');
+}
+
+#pregameText {
+  color: white;
+  font-size: 20px;
+  position: relative;
+  text-align: center;
+  line-height: 500px;
+  margin: 0 auto;
+}
+
+#overlays {
+  font-size: 20px;
+  position: absolute;
+  text-align: center;
+  margin: 0 auto;
+  bottom: 150px;
+  left: 205px;
+}
+
+audio {
+  display: none;
 }

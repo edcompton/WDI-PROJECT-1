@@ -57,6 +57,8 @@ PHASE 2 (ADDITIONAL) SCOPE
 3. Create a way of incrementing the player jump size based on how long the up key is pressed for.
 */
 
+
+
 var Game = Game || {};
 
 Game.init = function init() {
@@ -70,6 +72,7 @@ Game.init = function init() {
   Game.gameOver     = false;
   Game.difficulty   = 0;
 
+
   Game.startGame();
 };
 
@@ -82,12 +85,13 @@ Game.startGame = function() {
 
 Game.start = function start() {
   Game.gameOver = false;
+  $('#overlays').attr('src', '');
   console.log('clicked');
   Game.$scoreBoard = $('#scoreBoard');
   Game.scoreInterval = setInterval(function() {
     Game.$scoreBoard.text(Game.scoreCounter++);
   }, 100);
-  Game.seconds = 1500;
+  Game.seconds = 2000;
   Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
 };
 
@@ -112,25 +116,45 @@ Game.characterJump = function () {
 };
 
 Game.jumpAction = function () {
-  Game.$character.animate({ bottom: '120px' }, {
-    duration: 200,
+  setTimeout(($('#character').attr('src', 'http://i42.tinypic.com/hrd3bc.png'), 2000));
+  var audio = new Audio('../Audio/jump.wav');
+  audio.play();
+  Game.$character.animate({ bottom: '180px' }, {
+    duration: 300,
     complete: function() {
-      Game.$character.animate({ bottom: '0px' }, { duration: 300 });
+      Game.$character.animate({ bottom: '0px' }, { duration: 400 });
+      setTimeout(($('#character').attr('src', 'http://rs535.pbsrc.com/albums/ee355/Fikriy/megaman1.gif~c200'), 2000));
     }
   });
+
 };
 
 Game.chooseObjectType = function chooseObjectType() {
   var objectTypes = {
     box: {
-      width: '20px',
-      height: '20px',
+      width: '100px',
+      height: '70px',
       class: 'box'
     },
     wall: {
-      width: '20px',
-      height: '40px',
+      width: '70px',
+      height: '100px',
       class: 'wall'
+    },
+    mushroom: {
+      width: '60px',
+      height: '60px',
+      class: 'mushroom'
+    },
+    bear: {
+      width: '90px',
+      height: '60px',
+      class: 'bear'
+    },
+    owl: {
+      width: '100px',
+      height: '100px',
+      class: 'owl'
     }
   };
   var randomIndex = Math.floor(Math.random() * Object.keys(objectTypes).length);
@@ -186,6 +210,7 @@ Game.over = function() {
   console.log(Game.$highScore.html());
   Game.$scoreBoard.html('0');
   Game.scoreCounter = 0;
+  $('#overlays').attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
 };
 
 $(Game.init.bind(Game));
