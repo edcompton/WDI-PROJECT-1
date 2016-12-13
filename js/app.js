@@ -277,6 +277,8 @@ Game.over = function() {
   Game.$overlays.attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
   this.$character.attr('src', 'http://giffiles.alphacoders.com/124/12434.gif');
   this.$board.css('background-image', 'url("http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif")');
+  var gO = new Audio('../Audio/game-over.mp3');
+  gO.play();
   this.$startButton.show();
 };
 
