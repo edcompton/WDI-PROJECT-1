@@ -10,11 +10,13 @@ body {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  background-image: url('http://i.imgur.com/pnztT1T.gif');
+  background-image: url('http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif');
   background-size: cover;
 }
 /*
 http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif*/
+
+/*http://i.imgur.com/pnztT1T.gif*/
 
 #character {
   height: 100px;
@@ -30,6 +32,12 @@ http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rn
 .object {
   position: absolute;
   bottom: 0px;
+  right: -200px;
+}
+
+.flying {
+  position: absolute;
+  bottom: 100px;
   right: -200px;
 }
 
@@ -119,23 +127,23 @@ http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rn
 
 button:focus {outline:0;}
 
-.box {
+#box {
   content: url("http://static.tumblr.com/6e0d1f3887be1fb8603889ca12ca77c7/ypywzw1/6mnnmbim6/tumblr_static_2rxbpwchnz8kg4os404o080w4.gif");
 }
 
-.wall {
+#wall {
   content: url("https://openclipart.org/image/2400px/svg_to_png/218087/Pine_Tree.png");
 }
 
-.mushroom {
+#mushroom {
   content: url("https://media.giphy.com/media/A1GHXIybD7mhO/giphy.gif");
 }
 
-.bear {
+#bear {
   content: url("http://i96.photobucket.com/albums/l188/Pandora_Leonhart/tumblr_leptmoybI51qc4f5ao1_500_zps99hjkng1.gif");
 }
 
-.owl {
+#owl {
   content: url("http://data.whicdn.com/images/124352933/large.gif");
 }
 

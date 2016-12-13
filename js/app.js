@@ -56,7 +56,11 @@ PHASE 2 (ADDITIONAL) SCOPE
 
 3. Create a way of incrementing the player jump size based on how long the up key is pressed for.
 */
-
+//
+// To do
+// 1. Add new background gifs for each level and a swooshing gif inbetween the levels to change scenery (lightning/8bit scene change?)
+// 2. Create different heights of enemies.
+//
 
 
 var Game = Game || {};
@@ -100,19 +104,19 @@ Game.start = function start() {
 
 Game.whichLevel = function() {
   clearInterval(Game.objectsInterval);
-  if (Game.scoreCounter < 500) {
+  if (Game.scoreCounter < 300 && Game.gameOver === false) {
     console.log('level1');
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
-  } else if (Game.scoreCounter > 500 && Game.scoreCounter < 550){
+  } else if (Game.scoreCounter > 300 && Game.scoreCounter < 350){
     Game.nextLevel();
-  } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
-    Game.seconds -= 250;
+  } else if (Game.scoreCounter > 300 && Game.scoreCounter < 700) {
+    Game.seconds = 1500;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level2');
-  } else if (Game.scoreCounter > 1000 && Game.scoreCounter < 1050) {
+  } else if (Game.scoreCounter > 700 && Game.scoreCounter < 750) {
     Game.nextLevel();
-  } else if (Game.scoreCounter > 1000) {
-    Game.seconds -= 250;
+  } else if (Game.scoreCounter > 700) {
+    Game.seconds = 1000;
     Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
     console.log('level3');
   }
@@ -154,27 +158,32 @@ Game.chooseObjectType = function chooseObjectType() {
     box: {
       width: '100px',
       height: '70px',
-      class: 'box'
+      id: 'box',
+      class: 'flying'
     },
     wall: {
       width: '70px',
       height: '100px',
-      class: 'wall'
+      id: 'wall',
+      class: 'object'
     },
     mushroom: {
       width: '60px',
       height: '60px',
-      class: 'mushroom'
+      id: 'mushroom',
+      class: 'object'
     },
     bear: {
       width: '90px',
       height: '60px',
-      class: 'bear'
+      id: 'bear',
+      class: 'object'
     },
     owl: {
       width: '100px',
       height: '100px',
-      class: 'owl'
+      id: 'owl',
+      class: 'flying'
     }
   };
   var randomIndex = Math.floor(Math.random() * Object.keys(objectTypes).length);
@@ -182,21 +191,37 @@ Game.chooseObjectType = function chooseObjectType() {
   return objectTypes[randomKey];
 };
 
+// 1. Create a two new classes in the object, one for ground, one for flying
+// 2. Add one of those classes to each item appended below in addition to their existing classes
+// 3. Create an if statement that takes the existing animation for the ground items and creates a new else statement for the flying items, which changes their standard ground position.
+// 4. May need to create a new flying object to check where they are positioned on the screen.
+
 Game.createRandObject = function () {
   if (Game.gameOver === false) {
-    var $object = $('<div class="object"></div>');
+    var $object = $('<div></div>');
     var objectType = this.chooseObjectType();
     $object.css('height', objectType.height);
     $object.css('width', objectType.width);
     $object.addClass(objectType.class);
+    $object.attr('id', objectType.id);
     this.$board.append($object);
-    $object.animate({ bottom: '0px', left: '-200px'}, {
-      duration: Game.seconds,
-      step: Game.collisionCheck,
-      complete: function () {
-        this.remove();
-      }
-    });
+    if ($object.hasClass('object')) {
+      $object.animate({ bottom: '0px', left: '-200px'}, {
+        duration: Game.seconds,
+        step: Game.collisionCheck,
+        complete: function () {
+          this.remove();
+        }
+      });
+    } else if ($object.hasClass('flying')) {
+      $object.animate({ bottom: '100px', left: '-200px'}, {
+        duration: Game.seconds,
+        step: Game.collisionCheck,
+        complete: function () {
+          this.remove();
+        }
+      });
+    }
   }
 };
 
@@ -207,6 +232,7 @@ Game.collisionCheck = function () {
   if (obstacle.right > character.left && obstacle.left < character.right && obstacle.top < character.bottom && obstacle.bottom > character.top) {
     $(this).remove();
     clearInterval(Game.objectsInterval);
+    clearInterval(Game.levelsInterval);
     clearInterval(Game.scoreInterval);
     Game.over();
     Game.gameOver = true;
