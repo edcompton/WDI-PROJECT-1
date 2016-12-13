@@ -86,28 +86,37 @@ Game.startGame = function() {
 Game.start = function start() {
   Game.gameOver = false;
   $('#overlays').attr('src', '');
+  this.$character.attr('src', 'http://rs535.pbsrc.com/albums/ee355/Fikriy/megaman1.gif~c200');
   console.log('clicked');
   Game.$scoreBoard = $('#scoreBoard');
   Game.scoreInterval = setInterval(function() {
     Game.$scoreBoard.text(Game.scoreCounter++);
   }, 100);
   Game.seconds = 2000;
-  Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+  Game.levelsInterval = setInterval(this.whichLevel.bind(this), 3000);
 };
 
-
 // Game.whichLevel = function() {
-//   if (Game.scoreCounter < 500) {
-//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), Game.seconds);
-//   } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
-//     Game.seconds -= 500;
-//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), Game.seconds);
-//   } else if (Game.scoreCounter > 1000) {
-//     Game.seconds -= 500;
-//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), Game.seconds);
-//   }
+//   clearInterval(Game.objectsInterval);
+//   Game.objectsInterval();
 // };
-//
+
+Game.whichLevel = function() {
+  clearInterval(Game.objectsInterval);
+  if (Game.scoreCounter < 500) {
+    console.log('level1');
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+  } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
+    Game.seconds -= 250;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+    console.log('level2');
+  } else if (Game.scoreCounter > 1000) {
+    Game.seconds -= 250;
+    Game.objectsInterval = setInterval(this.createRandObject.bind(this), Game.seconds);
+    console.log('level3');
+  }
+};
+
 
 Game.characterJump = function () {
   this.$body.keyup(function(e){
@@ -211,25 +220,7 @@ Game.over = function() {
   Game.$scoreBoard.html('0');
   Game.scoreCounter = 0;
   $('#overlays').attr('src', 'http://vignette4.wikia.nocookie.net/fnaf-world-rpg/images/f/f5/GameOver.gif/revision/latest?cb=20160124234844');
+  this.$character.attr('src', 'http://giffiles.alphacoders.com/124/12434.gif');
 };
 
 $(Game.init.bind(Game));
-
-
-
-
-// var seconds = 2000;
-// while (Game.gameOver === false) {
-//   if (Game.scoreCounter < 500) {
-//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
-//   } else if (Game.scoreCounter > 500 && Game.scoreCounter < 1000) {
-//     seconds -= 500;
-//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
-//   } else if (Game.scoreCounter > 1000) {
-//     seconds -= 500;
-//     Game.objectsInterval = setTimeout(this.createRandObject.bind(this), seconds);
-//   }
-// }
-
-//
-// On key up check score for difficulty criteria and if over x then increment difficulty counter by 1

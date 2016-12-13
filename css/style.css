@@ -10,9 +10,11 @@ body {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  background-image: url('http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif');
+  background-image: url('http://i.imgur.com/pnztT1T.gif');
   background-size: cover;
 }
+/*
+http://68.media.tumblr.com/297bca135cc211b869c1a659664e46b9/tumblr_nsqazrgxAY1rnfgtmo4_500.gif*/
 
 #character {
   height: 100px;
@@ -96,10 +98,15 @@ body {
   bottom: 9px;
 }
 
-#start {
+.shake-rotate {
   position: relative;
   top: 29px;
   left: 57px;
+  height: 50px;
+  width: 100px;
+}
+
+#start {
   height: 50px;
   width: 100px;
   border-radius: 15px;
@@ -107,14 +114,10 @@ body {
   color: black;
   font-family: 'PressStart2P';
   text-align: center;
-  animation-iteration-count: infinite;
-  animation-name: slideout;
-  animation-direction: alternate;
-  animation-duration: 3s;
   text-shadow: #afe222 1px 1px, #000 2px 2px, #000 3px 3px;
-  transition: all 0.3s ease-out;
-
 }
+
+button:focus {outline:0;}
 
 .box {
   content: url("http://static.tumblr.com/6e0d1f3887be1fb8603889ca12ca77c7/ypywzw1/6mnnmbim6/tumblr_static_2rxbpwchnz8kg4os404o080w4.gif");
@@ -154,6 +157,7 @@ body {
   text-align: center;
   line-height: 500px;
   margin: 0 auto;
+  display: none;
 }
 
 #overlays {
