@@ -8,8 +8,6 @@ PHASE 1 SCOPE
 - There is a method of randomly assigning objects to 'show' based on a random number to travel from right to left at a set pace across the background div.
 - You can increment the position of a div 'cactus' object a tiny amount every time, which when sped up will give a smooth movement effect. You can then perform the collision check function after every incremented move of the object on the right hand side.
 - yet to decide on the best method of moving objects along the bottom of a div...margin?
-- .ANIMATE JQUERY TO GET IT MOVING ACROSS THE SCREEN
-ANIMATE(STEP, FUNCTION TO CHECK FOR COLLISION) TO CHECK FOR A COLLISION FOR EVERY OBJECT !!!!
 
 ANIMATE({top: 0, left: -1000}, {5000, step: function(){}});
 
@@ -57,9 +55,6 @@ PHASE 2 (ADDITIONAL) SCOPE
 3. Create a way of incrementing the player jump size based on how long the up key is pressed for.
 */
 //
-// To do
-// 1. Add new background gifs for each level and a swooshing gif inbetween the levels to change scenery (lightning/8bit scene change?)
-// 2. Create different heights of enemies.
 //
 
 
